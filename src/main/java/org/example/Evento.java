@@ -42,7 +42,7 @@ public class Evento implements Comparable<Evento> {
     private final TipoEvento tipo;
     private int prioridad;
     private final int interseccionId;
-    private final LocalDateTime timestamp;
+    private final LocalDateTime timestamp; //Nos ayuda con la antigüedad de los eventos
     private String descripcion;
 
     // Constructor
