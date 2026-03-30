@@ -7,14 +7,14 @@ import java.time.format.DateTimeFormatter;
  * Representa un evento critico en la red de simulacion (accidente, congestion, emergencia, clima).
  * Implementa Comparable para el ordenamiento, en este caso natural por prioridad descendente
  *
- * La prioridad de los eventos es un valor entero: mayor numero = mayor urgencia
+ * La prioridad de los eventos es un valor entero: mayor número = mayor urgencia
  */
 public class Evento implements Comparable<Evento> {
 
     // Definimos el formateador como una constante para que toString lo use
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    // ENUM: aqui listamos los eventos, su descripcion y su prioridad
+    // ENUM: aquí listamos los eventos, su descripcion y su prioridad
     public enum TipoEvento {
         ACCIDENTE_GRAVE(100, "Accidente grave"),
         AMBULANCIA_EN_RUTA(90, "Ambulancia en ruta"),
