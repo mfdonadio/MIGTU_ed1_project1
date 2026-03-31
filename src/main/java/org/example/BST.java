@@ -7,8 +7,8 @@ import java.util.*;
 
 public class BST<T> {
     protected Nodo<T> raiz;
-    private Comparator<T> comparador;
-    private final ArrayList<T> ordenInsercion;
+    protected Comparator<T> comparador;
+    private  ArrayList<T> ordenInsercion;
 
     //METRICAS PARA LAS PRUEBAS (necesarias para el proyecto jeje)
     private long comparacionesTotales;
