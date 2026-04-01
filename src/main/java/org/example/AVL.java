@@ -3,18 +3,20 @@ package org.example;
 import java.util.Comparator;
 
 /**
- * lA idea es implementar el AVL que hiciemos en el lab 10, pero intentando utilizar el codigo empleado en el BST.
+ * lA idea es implementar el AVL que hicimos en el lab 10, pero intentando utilizar el codigo empleado en el BST.
  *
  * Ademas, tenemos que contabilizar las rotaciones totales, ya sean simple o dobles, para poder estimar su rendimiento
  * y eficacia en situaciones de la vida diaria.
  */
 public class AVL<T> extends BST<T> {
 
+    //Contadores
     private long rotacionesSimples;
     private long rotacionesDobles;
 
+    //Constructor
     public AVL(Comparator<T> comparador) {
-        super(comparador);
+        super(comparador); //Hereda del comparador, usado en el BST.
         this.rotacionesSimples = 0;
         this.rotacionesDobles  = 0;
     }
