@@ -343,16 +343,16 @@ public class Main {
         boolean salir = false;
         while (!salir) {
             System.out.println("""
-                                    ┌─────────────────────────────────────────┐
-                                    │  Cola de Prioridad (Heap)               │
-                                    ├─────────────────────────────────────────┤
-                                    │  1. Demo insercion y extraccion         │
-                                    │  2. Demo modificar prioridad            │
-                                    │  3. Demo cambio dinamico de criterio    │
-                                    │  4. Procesar 10.000 eventos             │
-                                    │  5. Estadisticas de la cola             │
-                                    │  0. Volver                              │
-                                    └─────────────────────────────────────────┘
+                    ┌─────────────────────────────────────────┐
+                    │  Cola de Prioridad (Heap)               │
+                    ├─────────────────────────────────────────┤
+                    │  1. Demo insercion y extraccion         │
+                    │  2. Demo modificar prioridad            │
+                    │  3. Demo cambio dinamico de criterio    │
+                    │  4. Procesar 10.000 eventos             │
+                    │  5. Estadisticas de la cola             │
+                    │  0. Volver                              │
+                    └─────────────────────────────────────────┘
                     """);
             System.out.print(" Opcion: ");
             switch (leerOpcion()) {
