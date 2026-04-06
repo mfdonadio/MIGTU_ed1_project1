@@ -338,7 +338,7 @@ public class Main {
         ciudad.estadisticas();
     }
 
-    //======================================== MENU #4 - N-ario =======================================
+    //======================================== MENU #4 - Cola Prioridad =======================================
     private static void menuColaPrioridad() {
         boolean salir = false;
         while (!salir) {
@@ -370,7 +370,9 @@ public class Main {
 
     private static void demoHeapInsertarExtraer() {
         System.out.println("\n >>> Demo insercion y extraccion de eventos (Max-Heap)...\n");
-        ColaPrioridad<Evento> heap = new ColaPrioridad<>(CentroComparaciones.porPrioridadDescendente()); //Creamos la cola
+        //Lambda: creamos la cola comparando las prioridades (de myor a menor)
+        ColaPrioridad<Evento> heap = new ColaPrioridad<>((e1  , e2) ->
+                Integer.compare(e1.getPrioridad(), e2.getPrioridad())); //creamos la cola
 
         List<Evento> eventos = GeneradorDatos.eventosAleatorios(10, 100);// Generamos 10 eventos aleatorios para intersecciones con ID entre 1 y 100
         for (Evento e : eventos) {
@@ -389,7 +391,8 @@ public class Main {
 
     private static void demoHeapModificarPrioridad() {
         System.out.println("\n  >>> Demo modificar prioridad dinamicamente...\n");
-        ColaPrioridad<Evento> heap = new ColaPrioridad<>(CentroComparaciones.porPrioridadDescendente()); //Creamos la cola
+        ColaPrioridad<Evento> heap = new ColaPrioridad<>((e1,e2)->
+                Integer.compare(e1.getPrioridad(), e2.getPrioridad())); //Creamos la cola
 
         List<Evento> eventos = GeneradorDatos.eventosAleatorios(5, 50); // Generamos 5 eventos aleatorios para intersecciones con ID entre 1 y 50
         for (Evento e : eventos) heap.insertar(e); //Insertamos los eventos en nuestra cola
@@ -410,7 +413,9 @@ public class Main {
 
     private static void demoHeapCambioCriterio() {
         System.out.println("\n  >>> Demo cambio dinamico de criterio (Max <-> Min Heap)...\n");
-        ColaPrioridad<Evento> heap = new ColaPrioridad<>(CentroComparaciones.porPrioridadDescendente()); //Creamos la cola
+        //Lambda: creamos la cola comparando las prioridades (de myor a menor)
+        ColaPrioridad<Evento> heap = new ColaPrioridad<>((e1  , e2) ->
+                Integer.compare(e1.getPrioridad(), e2.getPrioridad())); //creamos la cola
         List<Evento> eventos = GeneradorDatos.eventosAleatorios(8, 100); // Generamos 8 eventos aleatorios para intersecciones con ID entre 1 y 100
         for (Evento e : eventos) heap.insertar(e); //Insertamos los eventos en nuestra cola
 
@@ -418,13 +423,13 @@ public class Main {
                 heap.peek().getTipo().getDescripcion(), heap.peek().getPrioridad()); //Queremos mostrar el proximo a salir y su prioridad si usamos el Max-Heap
 
         // Lambda: cambiar a Min-Heap con lambda explicita (menor prioridad primero)
-        heap.setComparator((a, b) -> Integer.compare(a.getPrioridad(), b.getPrioridad())); //Creamos y seteamos nuestro nuevo comparador
+        heap.setComparator((a, b) -> Integer.compare(b.getPrioridad(), a.getPrioridad())); //Creamos y seteamos nuestro nuevo comparador
         System.out.printf("  [MIN-HEAP] Proximo: %-25s , prioridad = %d%n",
                 heap.peek().getTipo().getDescripcion(), heap.peek().getPrioridad()); //Ahora, nos interesa mostrar el proximo a salir y su prioridad si usamos el Min-heap
 
         //volvemos a demostrar el cambio dinamico, ahora con la nueva prioridad y regresando a Max-Heap
-        heap.setComparator(CentroComparaciones.porPrioridadDescendente()); //Seteamos el comparador a prioridad descendente de nuevo, para demostrar que la estructura se reorganiza correctamente
-        System.out.printf("  [MAX-HEAP] Proximo: %-25s prioridad=%d%n",
+        heap.setComparator((a,b)-> Integer.compare(a.getPrioridad(),b.getPrioridad())); //Seteamos el comparador a prioridad descendente de nuevo, para demostrar que la estructura se reorganiza correctamente
+        System.out.printf("  [MAX-HEAP] Proximo: %-25s prioridad = %d%n",
                 heap.peek().getTipo().getDescripcion(), heap.peek().getPrioridad());
     }
 
