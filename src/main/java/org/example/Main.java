@@ -282,21 +282,42 @@ public class Main {
     private static void demoN_arioJerarquia() {
         System.out.println("\n Jerarquia urbana de Guatemala: \n");
         ciudad = crearCiudadDemo();
-        ciudad.porNiveles(ciudad.getRaiz());
+        //Usamos preOrder para mostrar la jerarquia descendentemente
+        List<NodoN_ario<String>> nodos = ciudad.preOrder(ciudad.getRaiz()); //Creamos la lista de nodos de PreOrder
+        for (NodoN_ario<String> nodo : nodos) { //Para cada nodo en la lista anterior....
+            // Creamos sangría (identación) basada en el nivel para que parezca un árbol
+            String sangria = "  ".repeat(obtenerProfundidadNivel(nodo.nivel)); //Llamamos al auxiliar: especializado en mantener la sangria
+            System.out.println(sangria + "└── " + nodo.nivel + ": " + nodo.dato); //imrpimimos
+        }
+        System.out.println("\n [!] Ciudad cargada exitosamente.");
+    }
+
+    // Funcion auxiliar para la estética de la sangría
+    private static int obtenerProfundidadNivel(NodoN_ario.Nivel nivel) {
+        return switch (nivel) {
+            case CIUDAD -> 0;
+            case DISTRITO -> 1;
+            case ZONA -> 2;
+            case AVENIDA -> 3;
+            case INTERSECCION -> 4;
+        };
     }
 
     private static void demoN_arioNiveles() {
         if (ciudad == null) ciudad = crearCiudadDemo(); //Si es nula, la creamos desde la 'base' ya establecida
         System.out.println("\n >>> Recorrido por niveles: \n");
-        ciudad.porNiveles(ciudad.getRaiz());
+        //Imprimimos la lista de listas que devuelve nuestro metodo porNiveles
+        for(List<String> nivel : ciudad.porNiveles(ciudad.getRaiz())){
+            System.out.println(nivel);
+        }
     }
 
     private static void demoN_arioProfundidad() {
         if (ciudad == null) ciudad = crearCiudadDemo(); //Si es nula, la creamos desde la 'base' ya establecida
         System.out.println("\n >>> Recorrido en profundidad (DFS): \n");
-        ciudad.preOrder(ciudad.getRaiz());
+        ciudad.preOrder(ciudad.getRaiz()).forEach(nodo-> System.out.print(nodo.dato + " -> ")); //Lambda para imprimir preOrder
         System.out.printf("%n >>> Profundidad maxima de la red: %d%n",
-                ciudad.preOrder(ciudad.getRaiz()));
+                ciudad.profundidadMaxima()); //Imprimimos la profundidad maxima
     }
 
     private static void demoN_arioConsultas() {

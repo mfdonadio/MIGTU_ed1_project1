@@ -151,7 +151,7 @@ public class ArbolN_ario<T> {
     public int contarPorNivel(T dato, NodoN_ario.Nivel nivel){
         NodoN_ario<T> nodo = buscarNodo(raiz, dato); //Nuevamente buscamos el nodo
         if(nodo == null) return 0; //Si es nulo, retorna 0
-        return contarPorNivel(nodo.obtenerDato(), nivel); //Llama al helper privado luego de validar
+        return contarPorNivel(nodo, nivel); //Llama al helper privado luego de validar
     }
 
     //Helper privado
