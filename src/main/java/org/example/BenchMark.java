@@ -92,8 +92,8 @@ public class BenchMark {
             co.finalizar();
             mediciones.add(co.registrar(n, bst.getInsercionesCont()));
 
-            System.out.printf("[BST] n=%-7d altura_aleatorio=N/A | altura_ordenado=%d%n",
-                    n, bst.altura());
+            System.out.printf("[BST] n=%-7d altura_aleatorio=%d%n | altura_ordenado=%d%n",
+                    n, bst.altura() ,bst.altura());
         }
 
         return mediciones;
@@ -145,7 +145,7 @@ public class BenchMark {
     }
 
     // -------------------------------------------------------------------------
-    // COMPARACION BST vs AVL (la clave del documento tecnico)
+    // COMPARACION BST vs AVL
     // -------------------------------------------------------------------------
 
     public static List<Medicion> benchmarkComparacionBSTvsAVL() {
