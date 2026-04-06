@@ -133,9 +133,9 @@ public class ColaPrioridad<T> {
     //=================================== MODIFICAR PRIORIDAD ===============================
     //Suponiendo que se quiera modificar la prioridad de un elemento. Darle mas o menos prioridad en cualquier momento
 
-    public boolean modificarPrioridad(T valorNuevo, T valorViejo){
+    public void modificarPrioridad(T valorNuevo, T valorViejo){
         int indice = buscarIndice(valorViejo); //Buscamos el indice del valor viejo
-        if (indice == -1) return false; //Si el indice no existe, no hay nada que modificar
+        if (indice == -1) return; //Si el indice no existe, no hay nada que modificar
 
         heap.set(indice, valorNuevo); //Si para la validacion, se inserta el nuevo valor en el indice del valor viejo
 
@@ -143,7 +143,6 @@ public class ColaPrioridad<T> {
         //De lo contrario, lo bajamos
         subirHeap(indice);
         bajarHeap(indice);
-        return true;
     }
 
     private int buscarIndice(T valor){
