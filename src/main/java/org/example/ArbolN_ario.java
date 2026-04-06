@@ -96,7 +96,7 @@ public class ArbolN_ario<T> {
     //PostOrder
     public List<NodoN_ario<T>> postOrder(NodoN_ario<T> raiz){
         List<NodoN_ario<T>> resultado = new ArrayList<>();
-        preOrder(raiz, resultado);
+        postOrder(raiz, resultado);
         return resultado;
     }
 
@@ -104,7 +104,7 @@ public class ArbolN_ario<T> {
         if (raiz == null) return;
 
         for(NodoN_ario<T> hijo : raiz.hijos){
-            preOrder(hijo, resultado);
+            postOrder(hijo, resultado);
         }
 
         resultado.add(raiz);
@@ -140,6 +140,42 @@ public class ArbolN_ario<T> {
 
     //============================== Metricas y Consultas necesarias para  lo solicitado en el proyecto :) =================
 
+    //Para fines en el main, necesitamos contar las intersecciones dentro de un distrito dado...
+    public int contarInterseccionesPorDistrito(T datoDistrito){
+        NodoN_ario<T> distrito = buscarNodo(raiz, datoDistrito); //Buscamos el nodo
+        if(distrito == null || distrito.nivel != NodoN_ario.Nivel.DISTRITO) return 0; //Si no existe o su nivel no se encuentra en los niveles establecidos... retorna
+        return contarPorNivel(distrito.obtenerDato(), NodoN_ario.Nivel.INTERSECCION);
+    }
+
+    //Helper publico
+    public int contarPorNivel(T dato, NodoN_ario.Nivel nivel){
+        NodoN_ario<T> nodo = buscarNodo(raiz, dato); //Nuevamente buscamos el nodo
+        if(nodo == null) return 0; //Si es nulo, retorna 0
+        return contarPorNivel(nodo.obtenerDato(), nivel); //Llama al helper privado luego de validar
+    }
+
+    //Helper privado
+    private int contarPorNivel(NodoN_ario<T> nodo, NodoN_ario.Nivel nivel) {
+        if (nodo == null) return 0; //Si es nulo, retorna 0
+        int cuenta = nodo.nivel == nivel ? 1 : 0; //Cuenta es igual al nivel del nodo, si este es igual a 'nivel' entonces se le asigna 1, de lo contrario 0
+        for (NodoN_ario<T> hijo : nodo.hijos) cuenta += contarPorNivel(hijo, nivel); //Llama a la funcion para todos los hijos
+        return cuenta; //Retorna la suma
+    }
+
+    //Ademas, surgió la necesidad de obtener todos los nodos de un nivel especifico.. por tanto
+    public List<T> obtenerPorNivel(NodoN_ario.Nivel nivel) {
+        List<T> resultado = new ArrayList<>(); //Creamos un nuevo arreglo en donde enlistar los nodos
+        obtenerPorNivel(raiz, nivel, resultado);// Llamamos a la funcion privada
+        return resultado;
+    }
+
+    //Funcion privada
+    private void obtenerPorNivel(NodoN_ario<T> nodo, NodoN_ario.Nivel nivel, List<T> resultado) {
+        if (nodo == null) return;
+        if (nodo.nivel == nivel) resultado.add(nodo.dato); //Si el nivel coincide con el deseado, lo agregamos a al arreglo
+        for (NodoN_ario<T> hijo : nodo.hijos) obtenerPorNivel(hijo, nivel, resultado); //Llama a la funcion para todos los hijos
+    }
+
     public int profundidadMaxima() { return profundidadMaxima(raiz); }
 
     private int profundidadMaxima(NodoN_ario<T> nodo) {
@@ -162,7 +198,7 @@ public class ArbolN_ario<T> {
 
     public int contarNodosInternos() { return contarPorTipo(raiz, false); } //No cuenta los nodos hoja
 
-    //Funciones adapatados de stack, consultas con la IA y VIDEOS
+    //Funciones adapatados de StackOverflow, consultas con la IA y VIDEOS
 
     //Dependiendo del booleano que le ingrese, cuenta o no las hojas. Es una funcion 2 en 1
     private int contarPorTipo(NodoN_ario<T> raiz, boolean contarHojas) {
@@ -175,7 +211,8 @@ public class ArbolN_ario<T> {
         return cuenta; //Regresa la cuenta total
     }
 
-    //No interesa saber el promedio de hijos por cada nodo que puede tener hijos, osera, por cada padre
+
+    //Nos interesa saber el promedio de hijos por cada nodo que puede tener hijos, osea, por cada padre
     public double factorPromedioRamificacion() {
         int[] acumulador = {0, 0}; //Crea un arreglo de dos posiciones, cada una con valor '0'.
         factorRamificacion(raiz, acumulador); //Hace una llamada

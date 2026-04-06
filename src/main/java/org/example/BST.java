@@ -75,33 +75,6 @@ public class BST<T> {
 
     }
 
-    public Nodo<T> buscar(T valor){
-        comparacionesUltimaOperacion = 0;
-        busquedasTotales++;
-        return buscar(this.raiz, valor);
-    }
-
-    public Nodo<T> buscar(Nodo<T> nodo, T valor){
-        if(nodo == null) return null;
-
-        comparacionesUltimaOperacion++; //INCREMENTA
-        comparacionesTotales++; //INCREMENTA
-        if(comparador.compare(valor, nodo.obtenerDato()) == 0){
-            return nodo;
-        }
-
-        if(comparador.compare(valor, nodo.obtenerDato()) < 0){
-            return buscar(nodo.izquierdo, valor);
-        }
-        return buscar(nodo.derecho, valor);
-    }
-
-    public void eliminar(T valor){
-        comparacionesUltimaOperacion = 0; //INICIALIZA
-        eliminacionesTotales++; //INCREMENTA
-        this.raiz = eliminar(this.raiz, valor);
-    }
-
     public void postOrder() {
         Stack<Nodo<T>> stack1 = new Stack<>();
         Stack<Nodo<T>> stack2 = new Stack<>();
@@ -156,6 +129,36 @@ public class BST<T> {
 
     }
 
+    public Nodo<T> buscar(T valor){
+        comparacionesUltimaOperacion = 0;
+        busquedasTotales++;
+        return buscar(this.raiz, valor);
+    }
+
+    public Nodo<T> buscar(Nodo<T> nodo, T valor){
+        if(nodo == null) return null;
+
+        int cmp = comparador.compare(valor, nodo.obtenerDato());
+        comparacionesUltimaOperacion++; //INCREMENTA
+        comparacionesTotales++; //INCREMENTA
+        if(cmp == 0){
+            return nodo;
+        }
+
+        if(cmp < 0){
+            return buscar(nodo.izquierdo, valor);
+        }
+        return buscar(nodo.derecho, valor);
+    }
+
+    public void eliminar(T valor){
+        comparacionesUltimaOperacion = 0; //INICIALIZA
+        eliminacionesTotales++; //INCREMENTA
+        this.raiz = eliminar(this.raiz, valor);
+    }
+
+    //Luego de realizar las pruebas, el BST falla en los 50K, 100K o mas eventos
+    //Tenemos que cambiar del enfoque recurivo al iteratico
     public boolean insertar(T valor){
         //Valores menores a la izquierda
         //Valores mayores a la derecha
@@ -165,18 +168,20 @@ public class BST<T> {
         if(this.raiz == null) {
             this.raiz = new Nodo<>(valor);
             ordenInsercion.add(valor);
+            insercionesTotales++;
             return true;
         }
         boolean insertado = insertar(valor, this.raiz) != null;
         if(insertado) {
             ordenInsercion.add(valor);  // Guardar solo si se insertó
+            insercionesTotales++;
         }
         return insertado;
     }
 
 
     public int contarNodos() {
-        return contarNodos(raiz);
+        return conteoNodosPrivado(raiz);
     }
 
     public int contarHojas() {
@@ -187,16 +192,12 @@ public class BST<T> {
         return altura(raiz);
     }
 
-    public int sumarNodos() {
-
-        return sumarNodos(raiz);
-    }
 
     public T minimo() {
         return minimo(raiz);
     }
 
-    public int maximo() {
+    public T maximo() {
         return maximo(raiz);
     }
 
@@ -277,27 +278,35 @@ public class BST<T> {
 
 
     private Nodo<T> insertar(T valor, Nodo<T> nodo) {
-        if (nodo == null) {
-            nodo = new Nodo<>(valor);
-            return nodo;
+        Nodo<T> actual = nodo;
+        Nodo<T> padre = null;
+
+        //Logica iterativa, ya que la recursisva fallo
+        while(actual != null){
+            padre = actual;
+            int comp =  comparador.compare(valor, actual.obtenerDato());
+
+            comparacionesUltimaOperacion++;
+            comparacionesTotales++;
+
+            if(comp == 0){
+                return null; //Si son iguales, retornamos null, evitamos valores repetidos
+            } else if(comp < 0){
+                actual = actual.izquierdo; //Si es menor, es el hijo izq
+            } else{
+                actual = actual.derecho; //Si es mayor, es el hijo der.
+            }
         }
 
-        comparacionesUltimaOperacion++; //INCREMENTA
-        comparacionesTotales++; //INCREMENTA
-        if (comparador.compare(valor, nodo.obtenerDato()) == 0)
-            return null;
-        if (comparador.compare(valor, nodo.obtenerDato()) < 0){
-            Nodo<T> aux = insertar(valor, nodo.izquierdo);
-            if(aux == null) return null;
-            nodo.izquierdo = aux;
-            return nodo;
+        // Creamos el nuevo nodo y lo 'colgamos' del padre encontrado
+        Nodo<T> nuevo = new Nodo<>(valor);
+        if (comparador.compare(valor, padre.obtenerDato()) < 0) {
+            padre.izquierdo = nuevo;
+        } else {
+            padre.derecho = nuevo;
         }
 
-        Nodo<T> aux = insertar(valor, nodo.derecho);
-        if(aux == null) return null;
-        nodo.derecho = aux;
-
-        return nodo;
+        return nuevo; // Retornamos el nodo insertado
     }
 
 
@@ -309,11 +318,13 @@ public class BST<T> {
         imprimirNodos(nodo.derecho);
     }
 
-    private int contarNodos(Nodo<T> nodo){
-        if(nodo == null) return 0;
-        else {
-            return 1 + contarNodos(nodo.izquierdo) +
-                    contarNodos(nodo.derecho);
+    private int conteoNodosPrivado(Nodo<T> nodo) {
+        if (nodo == null) {
+            return 0; // Si no hay nodo, el conteo es cero
+        } else {
+            // Sumamos 1 (el nodo actual) + el conteo de los subárboles
+            return 1 + conteoNodosPrivado(nodo.izquierdo) +
+                    conteoNodosPrivado(nodo.derecho);
         }
     }
 
@@ -323,16 +334,26 @@ public class BST<T> {
         return contarHojas(nodo.izquierdo) + contarHojas(nodo.derecho);
     }
 
+    //La solucion iterativa tampoco nos sirve, colapsa la memoria ... Stack Overflow
     private int altura(Nodo<T> nodo){
         if(nodo == null) return 0;
-        return 1 + Math.max(altura(nodo.izquierdo), altura(nodo.derecho)); //Math max ayuda a saber cual de los dos arboles es mayor
-    }
 
-    private int sumarNodos(Nodo<T> nodo){
-        if(nodo == null) return 0;
-        return (Integer)nodo.obtenerDato() +
-                sumarNodos(nodo.izquierdo) +
-                sumarNodos(nodo.derecho);
+        java.util.Queue<Nodo<T>> cola = new java.util.LinkedList<>();
+        cola.add(nodo);
+        int altura = 0;
+
+        while(!cola.isEmpty()){
+            int nodosEnNivel = cola.size();
+            altura++; //Cada vez que terminamos de procesar un nivel completo, sumamos 1
+
+            // Ahora vaciamos todos los nodos del nivel actual y metemos los del siguiente
+            for (int i = 0; i < nodosEnNivel; i++) {
+                Nodo<T> actual = cola.poll();
+                if (actual.izquierdo != null) cola.add(actual.izquierdo);
+                if (actual.derecho != null) cola.add(actual.derecho);
+            }
+        }
+        return altura;
     }
 
     private T minimo(Nodo<T> nodo){
@@ -341,9 +362,9 @@ public class BST<T> {
         return minimo(nodo.izquierdo);
     }
 
-    private int maximo(Nodo<T> nodo){
+    private T maximo(Nodo<T> nodo){
         if(nodo.derecho == null)
-            return (Integer)nodo.obtenerDato();
+            return nodo.obtenerDato();
         return maximo (nodo.derecho);
     }
 

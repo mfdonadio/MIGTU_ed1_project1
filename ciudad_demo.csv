@@ -1,0 +1,11 @@
+id,nombre,avenida,zona,distrito
+101,Interseccion-101-REF,Reforma,Z9,Centro
+102,Interseccion-102-PET,Petapa,Z12,Sur
+103,Interseccion-103-ROO,Roosevelt,Z11,Oeste
+104,Interseccion-104-AGU,Aguilar Batres,Z11,Sur
+105,Interseccion-105-VIS,Vista Hermosa,Z15,Este
+106,Interseccion-106-REF,Reforma,Z10,Centro
+107,Interseccion-107-PET,Petapa,Z21,Sur
+108,Interseccion-108-ROO,Roosevelt,Z7,Oeste
+109,Interseccion-109-AGU,Aguilar Batres,Z12,Sur
+110,Interseccion-110-VIS,Vista Hermosa,Z16,Este
