@@ -80,10 +80,15 @@ public class Main {
         for (Interseccion i : datos) bst.insertar(i);
         c.finalizar();
 
+        //Guardamos los datos anteriores
+        List<Interseccion> datosActuales = GeneradorDatos.mezclar(datos);
+
         //Otra lambda: cambiar criterio a nivel de congestion
         System.out.println("\n Cambiando criterio de orden a nivel de congestion...");
-        bst.setComparator((a, b) -> Integer.compare(a.getNivelCongestion(),
-                b.getNivelCongestion()));
+        bst.setComparator(CentroComparaciones.porCongestionAscendente());
+
+        bst.limpiar(); //Limpiamos el arbol
+        for(Interseccion i : datosActuales) bst.insertar(i);
 
         System.out.println(" " + c.resumen());
         bst.estadisticas();

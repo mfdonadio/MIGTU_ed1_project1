@@ -25,7 +25,8 @@ public final class CentroComparaciones {
 
     //3. Por nivel de congestion ascendente (menos congestionada primero ---> mas congestionado de ultimo)
     public static Comparator<Interseccion> porCongestionAscendente(){
-        return Comparator.comparingInt(Interseccion::getNivelCongestion);
+        return Comparator.comparingInt(Interseccion::getNivelCongestion)
+                .thenComparingInt(Interseccion::getId);
     }
 
     //4. Por nivel de riesgo descendente (mas riesgosa primero)
@@ -53,19 +54,25 @@ public final class CentroComparaciones {
         return Comparator.comparingInt(Evento::getPrioridad).reversed();
     }
 
-    //2. Por 'timestamp' ascendete (evento mas antiguo primero, algo asi como FIFO)
+    //2. Por prioridad ascendente (avento menos urgente de primero)
     public static Comparator<Evento> porPrioridadAscendente(){
+
+        return Comparator.comparing(Evento::getPrioridad);
+    }
+
+    //3. Por 'timestamp' ascendete (evento mas antiguo primero, algo asi como FIFO)
+    public static Comparator<Evento> porTiempo(){
         return Comparator.comparing(Evento::getTimestamp);
     }
 
-    //3. Por tipo de evento basandonos en su prioridad base y liefo por 'timestamp'
+    //4. Por tipo de evento basandonos en su prioridad base y liefo por 'timestamp'
     public static Comparator<Evento> porTipoLuegoTiempo(){
         return Comparator.comparingInt((Evento evento)-> evento.getTipo().getPrioridadBase())
                 .reversed()
                 .thenComparing(Evento::getTimestamp);
     }
 
-    //4. Por interseccion afectada (util en caso de agrupaar eventos de una misma zona)
+    //5. Por interseccion afectada (util en caso de agrupaar eventos de una misma zona)
     public static Comparator<Evento> porInterseccion(){
         return Comparator.comparingInt(Evento::getInterseccionId);
     }
