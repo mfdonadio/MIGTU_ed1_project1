@@ -144,7 +144,7 @@ public class ArbolN_ario<T> {
     public int contarInterseccionesPorDistrito(T datoDistrito){
         NodoN_ario<T> distrito = buscarNodo(raiz, datoDistrito); //Buscamos el nodo
         if(distrito == null || distrito.nivel != NodoN_ario.Nivel.DISTRITO) return 0; //Si no existe o su nivel no se encuentra en los niveles establecidos... retorna
-        return contarPorNivel(distrito.obtenerDato(), NodoN_ario.Nivel.INTERSECCION);
+        return contarPorNivel(distrito, NodoN_ario.Nivel.INTERSECCION);
     }
 
     //Helper publico

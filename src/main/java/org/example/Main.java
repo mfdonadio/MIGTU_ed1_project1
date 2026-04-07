@@ -404,7 +404,7 @@ public class Main {
         Evento objetivo = eventos.get(eventos.size() - 1); //Tomamos el ultimo eventos
         int antes = objetivo.getPrioridad(); //Su prioridad anterior
         objetivo.setPrioridad(999); //Cambiamos su prioridad a un valor deseado, en este caso 999
-        heap.modificarPrioridad(objetivo, objetivo); //Modificamos su posicion dentro de la cola
+        heap.modificarPrioridad(objetivo); //Modificamos su posicion dentro de la cola
         System.out.printf("  Evento modificado      : %s (%d -> 999)%n",
                 objetivo.getTipo().getDescripcion(), antes); //Mostramos el evento modificado
         System.out.printf("  Proximo a salir DESPUES: %s (prioridad=%d)%n",

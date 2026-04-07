@@ -158,6 +158,7 @@ public class AVL<T> extends BST<T> {
     }
 
     private int getAltura(Nodo<T> nodo) {
+
         return nodo == null ? 0 : nodo.altura;
     }
 

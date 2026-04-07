@@ -61,9 +61,9 @@ public class Interseccion implements Comparable<Interseccion> {
     /*toString: nos permite y ayuda a definir un formato para la salida de nuestro objeto*/
     @Override
     public String toString(){
-        return String.format("Interseccion{ID = %d, Nombre = '%s', Zona = '%s'," +
-                "Nivel de Congestion = %d, Nivel de Riesgo = %d, Activa = %b}", id, nombre, zona,
-                nivelCongestion, nivelRiesgo, activa);
+        return String.format("Interseccion{ID = %d || Nombre = '%s' || Zona = '%s' || " +
+                "Congestion = %d || Sensor = %s || Nivel de Riesgo = %d || Activa = %b}", id, nombre, zona,
+                nivelCongestion, sensor.getEstado() ,nivelRiesgo, activa);
     }
 
     //Getters y Setters
