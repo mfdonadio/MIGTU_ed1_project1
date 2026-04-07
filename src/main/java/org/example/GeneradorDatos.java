@@ -1,8 +1,5 @@
 package org.example;
 
-import org.example.Evento;
-import org.example.Interseccion;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -77,9 +74,13 @@ public final class GeneradorDatos {
         String nombre = "INTERSECCION -" + id + " - " + avenida.substring(0,3).toUpperCase();
 
         Interseccion interseccion = new Interseccion(id, nombre, avenida, zona, distrito);
-        interseccion.setNivelCongestion(random.nextInt(101));
-        interseccion.setNivelCongestion(random.nextInt(11));
 
+
+        interseccion.getSensor().setVelocidadPromedio(20 + random.nextInt(60)); //Seteamos una velocidad promedio entre 20-80 km/h
+        interseccion.getSensor().setVolumenVehicular(random.nextInt(700)); //Seteamos un volumen vehicular entre 0 y 700 vehiculos
+
+        interseccion.actualizarCongestionDinamica(80, 700); //Mandamos los datos para el calculo de congestion
+        interseccion.setNivelRiesgo(random.nextInt(11)); //Mandamos los datos para el nivel de riesgo
         return interseccion;
     }
 

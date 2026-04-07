@@ -11,6 +11,7 @@ package org.example;
  */
 public class Interseccion implements Comparable<Interseccion> {
 
+    private Sensor sensor;
     private final int id;
     private String nombre;
     private String avenida;
@@ -30,6 +31,7 @@ public class Interseccion implements Comparable<Interseccion> {
         this.distrito = distrito;
         this.nivelCongestion = 0;
         this.nivelRiesgo = 0;
+        this.sensor = new Sensor(id, id);
         this.activa = false;
     }
 
@@ -74,12 +76,17 @@ public class Interseccion implements Comparable<Interseccion> {
     public int getNivelCongestion() { return nivelCongestion;}
     public int getNivelRiesgo() { return nivelRiesgo;}
     public boolean isActiva() { return activa;}
+    public Sensor getSensor() {return sensor;}
 
     public void setNombre(String nombre) { this.nombre = nombre;}
     public void setAvenida(String avenida) { this.avenida = avenida;}
     public void setZona(String zona) { this.zona = zona;}
     public void setDistrito(String distrito) { this.distrito = distrito;}
-    public void setNivelCongestion(int nivel) {this.nivelCongestion = Math.max(0, Math.min(100,nivel));}
     public void setNivelRiesgo(int nivel) {this.nivelRiesgo = Math.max(0, Math.min(10,nivel));}
     public void setActiva(boolean activa) { this.activa = activa;}
+
+    //Implemtacion final de sensor ---> tiene como proposito el ser dinamico jeje.. algo mas que un simple setter
+    public void actualizarCongestionDinamica(double velMax, int capMax){
+        this.nivelCongestion = sensor.calcularNivelCongestion(velMax, capMax);
+    }
 }

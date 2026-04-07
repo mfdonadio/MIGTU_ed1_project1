@@ -23,9 +23,11 @@ public class AVL<T> extends BST<T> {
 
     @Override
     public boolean insertar(T valor) {
-        int antes = contarNodos();
-        raiz = insertar(raiz, valor);
-        return contarNodos() > antes;
+        //Contar los nodos tambien resulta ineficiente en las pruebas... 'int antes = contarNodos();'
+        //Una solucion que no pensamos y esperamos funcione es usar las InsercionesTotales del BST, al fnal hace lo mismo y se actualiza dinamicamente
+        long antes = getInsercionesCont();
+        raiz = insertar(raiz, valor); //Insertanos el nodo
+        return getInsercionesCont() > antes; //Si las inserciones aumentan, el valor sera mayor al de las insercinoes antes de la misma, es true
     }
 
     @Override

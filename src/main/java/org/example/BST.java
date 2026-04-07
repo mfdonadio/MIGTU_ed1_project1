@@ -13,9 +13,9 @@ public class BST<T> {
     //METRICAS PARA LAS PRUEBAS (necesarias para el proyecto jeje)
     private long comparacionesTotales;
     private long comparacionesUltimaOperacion;
-    private long insercionesTotales;
     private long eliminacionesTotales;
     private long busquedasTotales;
+    private long insercionesTotales;
 
     public BST(Comparator<T> comparador){
         this.comparador = comparador;
@@ -201,9 +201,9 @@ public class BST<T> {
         return maximo(raiz);
     }
 
-    public String estaBalanceada(){
-        if (estaBalanceada(raiz)) return "Si";
-        else return "No";
+    //Implementaremos una mejora en esta funcion, no es lo mas eficiente y esta afectando el rendimiento de las pruebas
+    public boolean estaBalanceada(){
+        return verificarBalance(raiz) != -1;
     }
 
     //METODOS FULL NUEVOS
@@ -370,13 +370,17 @@ public class BST<T> {
 
     //==============================================================================================================================================================================================
 
-    private boolean estaBalanceada(Nodo<T> nodo){
-        if(nodo == null) return true;
-        if (Math.max(altura(nodo.izquierdo),altura(nodo.derecho)) -
-                Math.min(altura(nodo.izquierdo),altura(nodo.derecho)) == 1 ||
-                Math.max(altura(nodo.izquierdo),altura(nodo.derecho)) -
-                        Math.min(altura(nodo.izquierdo),altura(nodo.derecho)) == 0) {
-            return estaBalanceada(nodo.izquierdo) && estaBalanceada(nodo.derecho);
-        } return false;
+    private  int verificarBalance(Nodo<T> nodo){
+        if(nodo == null) return 0; //Si es nulo retornamos 0
+
+        int alturaIzquierda = verificarBalance(nodo.izquierdo); //Calculamos la altura del sub arbol izquierdo
+        if(alturaIzquierda == -1) return -1;  //Si es -1, retornamos -1 --> indicaria un tipo de 'falla'
+
+        int alturaDerecho = verificarBalance(nodo.derecho); //Calculamos la altura del sub arbol derecho
+        if(alturaDerecho == -1) return -1; //Si es -1, retornamos -1 --> indicaria un tipo de 'falla'
+
+        if(Math.abs(alturaIzquierda - alturaDerecho) > 1) return -1; //Si el valor absoluto de la resta es > a 1, retornamos -1 --> indicaria un tipo de 'falla'
+
+        return 1 + Math.max(alturaIzquierda, alturaDerecho); //De lo contrario, sumamos 1 + el maximo entre la altura izquierda y derecha
     }
 }
