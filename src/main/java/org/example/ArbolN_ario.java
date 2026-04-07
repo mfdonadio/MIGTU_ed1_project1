@@ -244,7 +244,7 @@ public class ArbolN_ario<T> {
         return switch (actual) {
             case CIUDAD       -> NodoN_ario.Nivel.DISTRITO; //Si el padre es ciudad, el hijo esta en distrito
             case DISTRITO     -> NodoN_ario.Nivel.ZONA; //Si el padre es distrito, el hijo esta en zona
-            case ZONA         -> NodoN_ario.Nivel.AVENIDA; //Si el padre es zona, el hijo esta en avenida
+            case ZONA         -> NodoN_ario.Nivel.AVENIDA; // Si el padre es zona, el hijo esta en avenida
             case AVENIDA      -> NodoN_ario.Nivel.INTERSECCION; //Si el padre es avenida, el hijo esta en intersecciones
             case INTERSECCION -> null; //Si el padre esta en interseccion, el hijo es nulo porque no existe, 'interseccion' es el ultimo nivel
         };
