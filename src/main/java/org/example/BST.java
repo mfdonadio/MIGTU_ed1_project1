@@ -11,11 +11,12 @@ public class BST<T> {
     private  ArrayList<T> ordenInsercion;
 
     //METRICAS PARA LAS PRUEBAS (necesarias para el proyecto jeje)
-    private long comparacionesTotales;
-    private long comparacionesUltimaOperacion;
     private long eliminacionesTotales;
     private long busquedasTotales;
-    private long insercionesTotales;
+
+    protected long comparacionesTotales;
+    protected long comparacionesUltimaOperacion;
+    protected long insercionesTotales;
 
     public BST(Comparator<T> comparador){
         this.comparador = comparador;

@@ -38,11 +38,17 @@ public class AVL<T> extends BST<T> {
     private Nodo<T> insertar(Nodo<T> nodo, T valor) {
         if (nodo == null) return new Nodo<>(valor);
 
+        //metricas
+        comparacionesUltimaOperacion++;
+        comparacionesTotales++;
         int cmp = comparador.compare(valor, nodo.dato);
 
         if (cmp < 0) {
             nodo.izquierdo = insertar(nodo.izquierdo, valor);
         } else if (cmp > 0) {
+            //metricas
+            comparacionesUltimaOperacion++;
+            comparacionesTotales++;
             nodo.derecho = insertar(nodo.derecho, valor);
         } else {
             return nodo;
@@ -84,6 +90,10 @@ public class AVL<T> extends BST<T> {
 
     private Nodo<T> eliminar(Nodo<T> nodo, T valor) {
         if (nodo == null) return null;
+
+        //metricas
+        comparacionesUltimaOperacion++;
+        comparacionesTotales++;
 
         int cmp = comparador.compare(valor, nodo.dato);
 
@@ -188,7 +198,7 @@ public class AVL<T> extends BST<T> {
         System.out.println("=".repeat(45));
         System.out.println("  Estadisticas AVL");
         System.out.println("=".repeat(45));
-        System.out.printf("  Altura              : %d%n",  altura());
+        System.out.printf("  Altura              : %d%n",  getAltura(raiz));
         System.out.printf("  Nodos totales       : %d%n",  contarNodos());
         System.out.printf("  Hojas               : %d%n",  contarHojas());
         System.out.printf("  Balanceado          : %s%n",  estaBalanceada());

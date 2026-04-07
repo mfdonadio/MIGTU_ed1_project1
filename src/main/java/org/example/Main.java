@@ -211,7 +211,7 @@ public class Main {
         System.out.printf("  %-25s %-10s %-10d%n", "Rotaciones", "N/A", avl.getRotacionesTotales());
         System.out.printf("  %-25s %-10s %-10d%n", "Factor balance raiz", "N/A", avl.getFactorBalance());
         System.out.printf("  %-25s %-10s %-10s%n", "Balanceado", bst.estaBalanceada(), avl.estaBalanceada());
-        System.out.printf("  %-25s %-10,d %-10,d%n", "Comparaciones", bst.getComparacionesTotales(), avl.getComparacionesTotales());
+        System.out.printf("  %-25s %, -10d %, -10d%n", "Comparaciones", bst.getComparacionesTotales(), avl.getComparacionesTotales());
         System.out.println("  " + "=".repeat(46));
     }
 
