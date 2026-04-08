@@ -339,10 +339,19 @@ public class BST<T> {
         return count;
     }
 
+
+    //Para evitar overflow, usamos mejor un enfoque iterativo
     private int contarHojas(Nodo<T> nodo){
         if(nodo == null) return 0;
-        if(nodo.izquierdo == null && nodo.derecho == null) return 1;//Seria un hoja
-        return contarHojas(nodo.izquierdo) + contarHojas(nodo.derecho);
+        int count = 0;
+        Queue<Nodo<T>> q = new LinkedList<>();
+        q.add(nodo);
+        while(!q.isEmpty()) {
+            if (nodo.izquierdo == null && nodo.derecho == null) count++;
+            if (nodo.izquierdo != null) q.add(nodo.izquierdo);
+            if (nodo.derecho != null) q.add(nodo.derecho);
+        }
+        return count;
     }
 
     //La solucion iterativa tampoco nos sirve, colapsa la memoria ... Stack Overflow
