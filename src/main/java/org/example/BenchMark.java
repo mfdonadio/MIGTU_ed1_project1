@@ -160,14 +160,26 @@ public class BenchMark {
             AVL<Interseccion> avl =
                     new AVL<>(CentroComparaciones.porId());
 
-            for (Interseccion i : ordenados) {
-                bst.insertar(i);
-                avl.insertar(i);
-            }
+
+            //Para las maediciones del BST
+            Cronometro cBST = new Cronometro("Insercion BST ordenado n = " + n);
+            cBST.iniciar();
+            for (Interseccion i : ordenados) bst.insertar(i);
+            cBST.finalizar();
+            //Utilizamos el cronometro para obtener el tiempo real
+            mediciones.add(cBST.registrar(n, bst.getComparacionesTotales()));
+
+            //Para las mediciones del AVL
+            Cronometro cAVL = new Cronometro("Insercion AVL ordenado n = " + n);
+            cAVL.iniciar();
+            for (Interseccion i : ordenados) avl.insertar(i);
+            cAVL.finalizar();
+            //Utilizamos el cronometro para obtener el tiempo real
+            mediciones.add(cAVL.registrar(n, avl.getComparacionesTotales()));
 
             System.out.printf(
                     "[COMPARACION n = %-10d] BST altura = %-5d | AVL altura = %-5d | " +
-                            "BST comparaciones =%-5d | AVL rotaciones = %-5d%n",
+                            "BST comparaciones = %-5d | AVL rotaciones = %-5d%n",
                     n, bst.altura(), avl.altura(),
                     bst.getComparacionesTotales(), avl.getRotacionesTotales());
 
@@ -222,7 +234,7 @@ public class BenchMark {
             cl.finalizar();
             mediciones.add(cl.registrar(n, n));
 
-            System.out.printf("[HEAP] n = %-10d | Intercambios =%-5d%n",
+            System.out.printf("[HEAP] n = %-10d | Intercambios =c%-5d%n",
                     n, heap.getIntercambiosTotales());
         }
 

@@ -647,14 +647,14 @@ public class Main {
         System.out.println("  " + "-".repeat(52));
 
         // Lambda: criterio de extraccion por prioridad descendente ---> hacemos una nueva cola que nos sirva de copia
-        ColaPrioridad<Evento> copia = new ColaPrioridad<>((a, b) -> Integer.compare(a.getPrioridad(), b.getPrioridad()));
+        ColaPrioridad<Evento> copia = new ColaPrioridad<>(colaEventos.getComparator());
         for (Evento e : colaEventos.obtenerTodos()) copia.insertar(e); //Obtiene todos los eventos en orden y los inserta en la copia
 
         // Extraemos y mostramos el "Top 5" de eventos con mayor prioridad.
         // Al usar extraer(), el Heap se reordena automáticamente para darnos el siguiente máximo.
         for (int i = 0; i < 5 && !copia.estaVacia(); i++) {
             Evento e = copia.extraer(); // Remueve la raíz (el de mayor prioridad)
-            System.out.printf("  %d. %-25s prioridad=%-4d interseccion=%d%n",
+            System.out.printf("%d. Tipo Evento: %-15s | Prioridad del Evento = %-4d | ID Interseccion = %d%n",
                     i + 1, e.getTipo().getDescripcion(),
                     e.getPrioridad(), e.getInterseccionId());
         }

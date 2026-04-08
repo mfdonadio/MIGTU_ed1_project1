@@ -216,4 +216,7 @@ public class ColaPrioridad<T> {
         System.out.println("=".repeat(45));
     }
 
+    //Getter del comparador ---> implementacion necesaria dadas las pruebas
+    public Comparator<T> getComparator() { return this.comparador; }
+
 }
