@@ -51,7 +51,7 @@ public final class CentroComparaciones {
 
     //1. Por prioridad descendente (evento mas urgente primero)
     public static Comparator<Evento> porPrioridadDescendente(){
-        return Comparator.comparingInt(Evento::getPrioridad).reversed();
+        return (a, b) -> Integer.compare(b.getPrioridad(), a.getPrioridad());
     }
 
     //2. Por prioridad ascendente (avento menos urgente de primero)

@@ -90,6 +90,7 @@ public class Main {
         bst.limpiar(); //Limpiamos el arbol
         for(Interseccion i : datosActuales) bst.insertar(i);
 
+
         System.out.println(" " + c.resumen());
         bst.estadisticas();
     }

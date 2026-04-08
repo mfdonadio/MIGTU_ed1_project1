@@ -85,6 +85,7 @@ public class BenchMark {
 
             // --- Insercion ordenada (peor caso) ---
             List<Interseccion> ordenados = GeneradorDatos.interseccionesOrdenadas(n);
+            int alturaAleatoria = bst.altura();
             bst.limpiar();
             Cronometro co = new Cronometro("BST insercion ordenada (peor) n=" + n);
             co.iniciar();
@@ -92,8 +93,8 @@ public class BenchMark {
             co.finalizar();
             mediciones.add(co.registrar(n, bst.getInsercionesCont()));
 
-            System.out.printf("[BST] n=%-7d altura_aleatorio=%d%n | altura_ordenado=%d%n",
-                    n, bst.altura() ,bst.altura());
+            System.out.printf("[BST] n = %-10d | Altura Aleatoria = %-5d | Altura Peor Caso =%-5d%n",
+                    n, alturaAleatoria ,bst.altura());
         }
 
         return mediciones;
@@ -137,7 +138,7 @@ public class BenchMark {
             co.finalizar();
             mediciones.add(co.registrar(n, avl.getInsercionesCont()));
 
-            System.out.printf("[AVL] n=%-7d altura_ordenado=%d | rotaciones=%,d%n",
+            System.out.printf("[AVL] n = %-10d | Altura = %-5d | Rotaciones Realizadas =%-5d%n",
                     n, avl.altura(), avl.getRotacionesTotales());
         }
 
@@ -165,14 +166,14 @@ public class BenchMark {
             }
 
             System.out.printf(
-                    "[COMPARACION n=%-7d] BST altura=%d | AVL altura=%d | " +
-                            "BST comparaciones=%,d | AVL rotaciones=%,d%n",
+                    "[COMPARACION n = %-10d] BST altura = %-5d | AVL altura = %-5d | " +
+                            "BST comparaciones =%-5d | AVL rotaciones = %-5d%n",
                     n, bst.altura(), avl.altura(),
                     bst.getComparacionesTotales(), avl.getRotacionesTotales());
 
             // Registrar alturas como medicion
-            Medicion mBST = new Medicion("ALTURA BST ordenado n=" + n, 0, n, bst.altura());
-            Medicion mAVL = new Medicion("ALTURA AVL ordenado n=" + n, 0, n, avl.altura());
+            Medicion mBST = new Medicion("ALTURA BST ordenado n =" + n, 0, n, bst.altura());
+            Medicion mAVL = new Medicion("ALTURA AVL ordenado n =" + n, 0, n, avl.altura());
             mediciones.add(mBST);
             mediciones.add(mAVL);
         }
@@ -221,7 +222,7 @@ public class BenchMark {
             cl.finalizar();
             mediciones.add(cl.registrar(n, n));
 
-            System.out.printf("[HEAP] n=%-6d intercambios=%,d%n",
+            System.out.printf("[HEAP] n = %-10d | Intercambios =%-5d%n",
                     n, heap.getIntercambiosTotales());
         }
 

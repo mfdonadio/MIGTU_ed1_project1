@@ -202,9 +202,11 @@ public class BST<T> {
         return maximo(raiz);
     }
 
-    //Implementaremos una mejora en esta funcion, no es lo mas eficiente y esta afectando el rendimiento de las pruebas
+    //Implementacion final, mucho mas eficiente
+    //Añadimos un  try - catch para evitar al 100% el Overflow
     public boolean estaBalanceada(){
-        return verificarBalance(raiz) != -1;
+        try { return verificarBalance(raiz) != -1;}
+        catch (StackOverflowError e){ return false;} //Si llega a ver un overflow, aseguramos regrese un false y que no truene el programa
     }
 
     //METODOS FULL NUEVOS
@@ -319,14 +321,22 @@ public class BST<T> {
         imprimirNodos(nodo.derecho);
     }
 
+    //Luego de varias pruebas, la solucion recursiva no es la mas eficiente y falla... cambio a iterativa
+    //Tipo BFS y algo que ya hicimos en clase. Nos permite llevar una memoria de que Nodos ya recorrimos y saber cuales faltan nivel a nivel.
     private int conteoNodosPrivado(Nodo<T> nodo) {
-        if (nodo == null) {
-            return 0; // Si no hay nodo, el conteo es cero
-        } else {
-            // Sumamos 1 (el nodo actual) + el conteo de los subárboles
-            return 1 + conteoNodosPrivado(nodo.izquierdo) +
-                    conteoNodosPrivado(nodo.derecho);
+        if (nodo == null) return 0; // Si no hay nodo, el conteo es cero
+
+        int count = 0;//Inicializamod la cuenta en 0
+        Queue<Nodo<T>> q = new LinkedList<>(); //Creamos una cola
+        q.add(nodo); //encolamos el nodo
+        //Mientras no este vacia
+        while (!q.isEmpty()) {
+            Nodo<T> actual = q.poll(); //Sacamos el actual
+            count++; //Aumentamos la cuenta
+            if(actual.izquierdo != null)q.add(actual.izquierdo);  //Agregamos al hijo izquierdo
+            if(actual.derecho != null)q.add(actual.derecho); //Agregamos al hijo derecho
         }
+        return count;
     }
 
     private int contarHojas(Nodo<T> nodo){

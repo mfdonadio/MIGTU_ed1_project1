@@ -64,7 +64,9 @@ public class ArbolN_ario<T> {
 
     private NodoN_ario<T> buscarNodo(NodoN_ario<T> raiz, T dato){
         if (raiz == null) return null;
-        if(raiz.dato == dato) return raiz;
+
+        //Comparamos,mejor, los caracteres uno a uno
+        if(raiz.dato.equals(dato)) return raiz;
 
         for(NodoN_ario<T> hijo : raiz.hijos){
             NodoN_ario<T> resultado = buscarNodo(hijo, dato);
