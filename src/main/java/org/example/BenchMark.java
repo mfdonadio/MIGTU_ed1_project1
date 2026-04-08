@@ -93,7 +93,7 @@ public class BenchMark {
             co.finalizar();
             mediciones.add(co.registrar(n, bst.getInsercionesCont()));
 
-            System.out.printf("[BST] n = %-10d | Altura Aleatoria = %-5d | Altura Peor Caso =%-5d%n",
+            System.out.printf("[BST] n = %-10d | Altura Aleatoria = %-5d | Altura Peor Caso = %-5d%n",
                     n, alturaAleatoria ,bst.altura());
         }
 
@@ -138,7 +138,7 @@ public class BenchMark {
             co.finalizar();
             mediciones.add(co.registrar(n, avl.getInsercionesCont()));
 
-            System.out.printf("[AVL] n = %-10d | Altura = %-5d | Rotaciones Realizadas =%-5d%n",
+            System.out.printf("[AVL] n = %-10d | Altura = %-5d | Rotaciones Realizadas = %-5d%n",
                     n, avl.altura(), avl.getRotacionesTotales());
         }
 
