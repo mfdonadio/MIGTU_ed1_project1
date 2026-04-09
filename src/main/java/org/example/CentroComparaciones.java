@@ -72,7 +72,7 @@ public final class CentroComparaciones {
                 .thenComparing(Evento::getTimestamp);
     }
 
-    //5. Por interseccion afectada (util en caso de agrupaar eventos de una misma zona)
+    //5. Por interseccion afectada (util en caso de agrupar eventos de una misma zona)
     public static Comparator<Evento> porInterseccion(){
         return Comparator.comparingInt(Evento::getInterseccionId);
     }

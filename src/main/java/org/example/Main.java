@@ -20,6 +20,10 @@ public class Main {
     private static boolean usandoAVL = false;
 
     public static void main(String[] args) {
+        System.out.println("================================================");
+        System.out.println(" Luna Samantha Arrazola Escobar      - 1022725"  );
+        System.out.println(" Marco Fabrizzio Donadio Castellanos - 1076925");
+        System.out.println("================================================");
         imprimirBanner();
         boolean salir = false;
 
@@ -701,7 +705,7 @@ public class Main {
 
                 ╔═══════════════════════════════════════════════════════════╗
                 ║   MIGTU - Motor Inteligente de Gestión de Tráfico Urbano  ║
-                ║   Estructura de Datos I  ·  2026S1  ·  URL               ║
+                ║   Estructura de Datos I  ·  2026S1  ·  URL                ║
                 ╚═══════════════════════════════════════════════════════════╝
                 """);
     }
